@@ -14,6 +14,9 @@ import 'authcontroller.dart';
 
 
 class ReceivableController extends GetxController {
+
+  final auth = Get.put(AuthController());
+
   final prof = Get.put(ProfileController());
   List<Receivable>? receivable;
   List<Receivable>? foundreceivable = [];
