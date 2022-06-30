@@ -113,7 +113,7 @@ class AccountScreen extends StatelessWidget {
                  children: <Widget>[
                    InkWell(
                      onTap: (){
-                       Get.to(()=>ReceivableScreen());
+                       Get.to(ReceivableScreen());
                      },
                      child: Container(
                        height:50,
