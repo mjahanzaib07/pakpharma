@@ -24,6 +24,7 @@ class ProfileController extends GetxController {
   }
   Future<User> initializeUserData() async {
     String json = await getUser();
+    //jkashkjflak
     late User user;
     user = User.fromJson(jsonDecode(json));
     print(user.organization.organizationId);
