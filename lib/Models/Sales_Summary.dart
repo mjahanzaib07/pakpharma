@@ -26,7 +26,7 @@ class SalesSummary{
         CompletedSaleInvoiceinvoice:json['saleInvoiceSummary']['CompletedSaleInvoice'],
         TotalSaleInvoice: json['saleInvoiceSummary']['TotalSaleInvoice'],
         PendingSaleInvoice: json['saleInvoiceSummary']['PendingSaleInvoice'],
-        CompletedSaleInvoiceorder: json['saleOrderSummary']['CompletedSaleInvoiceorder'],
+        CompletedSaleInvoiceorder: json['saleOrderSummary']['CompletedSaleInvoice'],
         TotalCreditNotes: json['creditNoteSummary']['TotalCreditNotes'],
        );
   }

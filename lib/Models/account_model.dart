@@ -1,4 +1,4 @@
-class Receivable {
+class Account {
   String accId;
   String accountidcode;
   String accounttitle;
@@ -7,8 +7,7 @@ class Receivable {
   double openingbalance;
   double currentbalance;
 
-
-  Receivable({
+  Account({
     required this.accId,
     required this.accountidcode,
     required this.accounttitle,
@@ -19,8 +18,8 @@ class Receivable {
 
   });
 
-  factory Receivable.fromJson(Map<String, dynamic> json) {
-    return Receivable(
+  factory Account.fromJson(Map<String, dynamic> json) {
+    return Account(
       accId: json['AccountId'] as String,
       accountidcode: json['AccountIdCode'] as String,
       headcategory:json['HeadCategory']['HeadCategoryName'] as String,

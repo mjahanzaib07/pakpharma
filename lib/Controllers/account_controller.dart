@@ -6,9 +6,8 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http/http.dart' as http;
 import 'package:pak_pharma/Controllers/profilecontroller.dart';
-import 'package:pak_pharma/Models/receivable_model.dart';
-
-import '../Models/payable_model.dart';
+import 'package:pak_pharma/Models/account_model.dart';
+import '../api/api_checker.dart';
 import '../api/api_client.dart';
 import 'authcontroller.dart';
 
@@ -16,10 +15,13 @@ import 'authcontroller.dart';
 class AccountController extends GetxController {
   final auth = Get.put(AuthController());
   final prof = Get.put(ProfileController());
-  List<Payable>? payables;
-  List<Receivable>? receivable;
-  List<Payable>? foundpayables = [];
-  List<Receivable>? foundreceivable = [];
+  List<Account>? accounts;
+  Account? selectedAcc;
+
+
+
+  List<Account>? foundAccounts = [];
+
   String? token;
   int? number;
   ApiClient api = ApiClient();
@@ -30,60 +32,45 @@ class AccountController extends GetxController {
   }
   Future refreshAll() async {
     token = await auth.getToken();
-    await setPayable(prof.userDetail?.organization.organizationId);
-    await setReceivable(prof.userDetail?.organization.organizationId);
+    await getAccounts(prof.userDetail?.organization.organizationId);
 
   }
-  Future setPayable(String? id) async {
-    Response response = await api.getData("api/Dashboard/AccountsPayable",query: {"organizationId":id});
+  Future getAccounts(String? id) async {
+    Response response = await api.getData("api/Account/GetAll",query: {"internalOrganizationId":id});
     print(response.statusCode);
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
       Map<String, dynamic> payableData = response.body;
       List<dynamic> data = payableData["Data"];
-      List<Payable> payabledata = data
+      List<Account> payabledata = data
           .map(
-            (dynamic item) => Payable.fromJson(item),
+            (dynamic item) => Account.fromJson(item),
       ).toList();
-      payables = payabledata.where((payabledata) => payabledata.currentbalance != 0||payabledata.currentbalance != 0).toList();
-      foundpayables = payables;
+      accounts = payabledata.where((payabledata) => payabledata.currentbalance != 0||payabledata.currentbalance != 0).toList();
+      foundAccounts = accounts;
+      print(foundAccounts!.length);
       update();
     } else {
+      ApiChecker().checkApi(response);
       // If the server did not return a 201 CREATED response,
       // then throw an exception.
-      throw Exception('Failed to get payable data');
+      throw Exception('Failed to get accounts');
     }
   }
-  Future setReceivable(String? id) async {
-    Response response = await api.getData("api/Dashboard/AccountsReceivables",query: {"organizationId":id});
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      // If the server did return a 201 CREATED response,
-      // then parse the JSON.
-      Map<String, dynamic> receivableData = response.body;
-      List<dynamic> data = receivableData["Data"];
-      List<Receivable> receivabledata = data
-          .map(
-            (dynamic item) => Receivable.fromJson(item),
-      ).toList();
-      receivable = receivabledata.where((receivabledata) => receivabledata.currentbalance != 0||receivabledata.currentbalance != 0).toList();
-      print(receivable?.length);
-      foundreceivable = receivable;
-      update();
-    } else {
-      // If the server did not return a 201 CREATED response,
-      // then throw an exception.
-      throw Exception('Failed to get payable data');
-    }
+
+  setSelectedAccount(Account acc){
+    selectedAcc = acc;
+    update();
   }
+
   void runFilter(String enteredKeyword) {
-    List<Payable> results = [];
+    List<Account> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
-      results = payables!;
+      results = accounts!;
     } else {
-      results = payables!
+      results = accounts!
           .where((user) => user.accounttitle
           .toUpperCase()
           .contains(enteredKeyword.toUpperCase()))
@@ -92,7 +79,7 @@ class AccountController extends GetxController {
     }
 
     // Refresh the UI
-    foundpayables = results;
+    foundAccounts = results;
     update();
 
   }

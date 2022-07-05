@@ -12,9 +12,8 @@ class Transaction{
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
-
-        transactionDate: DateTime(json['TransactionDate']['Year'],json['TransactionDate']['Month'],json['TransactionDate']['Day']),
-        ammount: json['TransData']['ammount'],
+      transactionDate: DateTime(json['TransactionDate']['Year'],json['TransactionDate']['Month'],json['TransactionDate']['Day'],),
+        ammount: json['TransData']['Amount'],
         type:json['TransData']['DebitOrCredit'],
 
     );

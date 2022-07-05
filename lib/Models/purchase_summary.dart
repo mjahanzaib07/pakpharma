@@ -32,8 +32,6 @@ class purchaseSummary {
         PendingPurchaseInvoice: json['purchaseInvoiceSummary']['PendingPurchaseInvoice'],
         TotalPurchaseInvoice: json['purchaseInvoiceSummary']['TotalPurchaseInvoice'],
         TotalDebitNotes: json['debitNoteSummary']['TotalDebitNotes'],
-
-
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:intl/intl.dart';
 import 'package:pak_pharma/Controllers/account_controller.dart';
 import 'package:pak_pharma/Controllers/balance_controller.dart';
+import 'package:pak_pharma/View/Accounts/payable_screen.dart';
 import 'package:pak_pharma/View/Accounts/receivable_screen.dart';
 import 'package:pak_pharma/View/header.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -140,29 +141,34 @@ class AccountScreen extends StatelessWidget {
                        )),
                      ),
                    ),
-                   Container(
-                     height:50,
-                     width: MediaQuery.of(context).size.width * 0.40,
-                     decoration: BoxDecoration(
-                       color: Color(0xff40b5f3),
-                       borderRadius: BorderRadius.circular(10),
-                       boxShadow: [
-                         BoxShadow(
-                           color: Colors.grey.withOpacity(0.5),
-                           spreadRadius: 5,
-                           blurRadius: 7,
-                           offset: Offset(0, 3), // changes position of shadow
-                         ),
-                       ],
+                   InkWell(
+                     onTap: (){
+                       Get.to(PayableScreen());
+                     },
+                     child: Container(
+                       height:50,
+                       width: MediaQuery.of(context).size.width * 0.40,
+                       decoration: BoxDecoration(
+                         color: Color(0xff40b5f3),
+                         borderRadius: BorderRadius.circular(10),
+                         boxShadow: [
+                           BoxShadow(
+                             color: Colors.grey.withOpacity(0.5),
+                             spreadRadius: 5,
+                             blurRadius: 7,
+                             offset: Offset(0, 3), // changes position of shadow
+                           ),
+                         ],
+                       ),
+                       child: Center(child: Column(
+                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                         children: [
+                           Image.asset("assets/images/payable.png",height: 50,),
+                           Text('Payables',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
+                           Text(formatter.format(balanceController.summary?.payable??0),style: TextStyle(color: Colors.white),),
+                         ],
+                       )),
                      ),
-                     child: Center(child: Column(
-                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                       children: [
-                         Image.asset("assets/images/payable.png",height: 50,),
-                         Text('Payables',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
-                         Text(formatter.format(balanceController.summary?.payable??0),style: TextStyle(color: Colors.white),),
-                       ],
-                     )),
                    ),
                    Container(
                      height:50,
@@ -182,7 +188,7 @@ class AccountScreen extends StatelessWidget {
                      child: Center(child: Column(
                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                        children: [
-                         Icon(Icons.account_balance,size: 40,),
+                         Icon(Icons.account_balance,size: 40,color: Colors.white,),
                          const Text('Banks',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
                          Text( formatter.format(balanceController.summary?.bankbBalance??0),style: TextStyle(color: Colors.white),),
                        ],
@@ -206,7 +212,7 @@ class AccountScreen extends StatelessWidget {
                      child: Center(child: Column(
                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                        children: [
-                         Icon(Icons.money,size: 40,),
+                         Icon(Icons.money,size: 40,color: Colors.white,),
                          Text('Cash In Hand',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),),
                          Text(formatter.format(balanceController.summary?.cashBalance??0),style: TextStyle(color: Colors.white),),
                        ],

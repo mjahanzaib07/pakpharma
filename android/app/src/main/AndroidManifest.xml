@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aiksol.pak_pharma">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
    <application
         android:label="pak_pharma"
         android:name="${applicationName}"

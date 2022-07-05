@@ -1,4 +1,4 @@
-class COASsummary {
+class COAsummary {
   double assets;
   double liability;
   double equity;
@@ -6,7 +6,7 @@ class COASsummary {
   double expense;
 
 
-  COASsummary({
+  COAsummary({
     required this.assets,
     required this.equity,
     required this.expense,
@@ -15,8 +15,8 @@ class COASsummary {
 
   });
 
-  factory COASsummary.fromJson(Map<String, dynamic> json) {
-    return COASsummary(
+  factory COAsummary.fromJson(Map<String, dynamic> json) {
+    return COAsummary(
 
         assets:json['Assets'],
         liability:json['Liability'],
